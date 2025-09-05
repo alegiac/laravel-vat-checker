@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/laravel-vat-checker.iml" filepath="$PROJECT_DIR$/.idea/laravel-vat-checker.iml" />
       <module fileurl="file://$PROJECT_DIR$/../references/laravel-vat-eu-validator/.idea/laravel-vat-eu-validator.iml" filepath="$PROJECT_DIR$/../references/laravel-vat-eu-validator/.idea/laravel-vat-eu-validator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../testers/vat-checker-tester/.idea/vat-checker-tester.iml" filepath="$PROJECT_DIR$/../testers/vat-checker-tester/.idea/vat-checker-tester.iml" />
     </modules>
   </component>
 </project>

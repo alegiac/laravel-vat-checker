@@ -8,5 +8,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="laravel-vat-eu-validator" />
+    <orderEntry type="module" module-name="vat-checker-tester" />
   </component>
 </module>
