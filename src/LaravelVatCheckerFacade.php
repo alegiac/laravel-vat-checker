@@ -4,9 +4,6 @@ namespace Alegiac\LaravelVatChecker;
 
 use Illuminate\Support\Facades\Facade;
 
-/**
- * @see \Alegiac\LaravelVatChecker\Skeleton\SkeletonClass
- */
 class LaravelVatCheckerFacade extends Facade
 {
     /**

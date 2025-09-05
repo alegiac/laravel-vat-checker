@@ -5,18 +5,18 @@
         "alegiac",
         "laravel-vat-checker"
     ],
+    "version": "1.0.0",
     "homepage": "https://github.com/alegiac/laravel-vat-checker",
     "license": "MIT",
     "type": "library",
     "authors": [
         {
             "name": "Alessandro GIacomella",
-            "email": "alessandro.giacomella@gmail.com",
-            "role": "Developer"
+            "email": "alessandro.giacomella@gmail.com"
         }
     ],
     "require": {
-        "php": "^7.4|^8.0",
+        "php": "^8.0",
         "illuminate/support": "^8.0"
     },
     "require-dev": {

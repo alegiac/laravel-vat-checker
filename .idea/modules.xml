@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/laravel-vat-checker.iml" filepath="$PROJECT_DIR$/.idea/laravel-vat-checker.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../references/laravel-vat-eu-validator/.idea/laravel-vat-eu-validator.iml" filepath="$PROJECT_DIR$/../references/laravel-vat-eu-validator/.idea/laravel-vat-eu-validator.iml" />
     </modules>
   </component>
 </project>
