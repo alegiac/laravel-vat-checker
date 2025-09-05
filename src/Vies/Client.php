@@ -2,6 +2,7 @@
 
 namespace Alegiac\LaravelVatChecker\Vies;
 
+use Alegiac\LaravelVatChecker\Format\LaravelVatFormatChecker;
 use SoapClient;
 use SoapFault;
 
@@ -25,27 +26,33 @@ class Client
 
     /**
      * Check via Vies the VAT number
-     * @param string $countryCode
      * @param string $vatNumber
      *
      * @return bool
      *
      * @throws ViesException
      */
-    public function check(string $countryCode, string $vatNumber): bool
+    public function check(string $vatNumber): array
     {
         try {
+            $vat = LaravelVatFormatChecker::splitVat($vatNumber);
+
             $response = $this->getClient()->checkVat(
                 [
-                    'countryCode' => $countryCode,
-                    'vatNumber' => $vatNumber,
+                    'countryCode' => $vat[0] ?? '',
+                    'vatNumber' => $vat[1] ?? '',
+                    'requestDate' => $vat[2] ?? '',
+                    'valid' => $vat[3] ?? false,
+                    'name' => $vat[3] ?? '',
+                    'address' => $vat[4] ?? '',
                 ]
             );
+
         } catch (SoapFault $soapFault) {
             throw new ViesException($soapFault->getMessage(), $soapFault->getCode());
         }
 
-        return $response->valid;
+        return (array)$response;
     }
 
     /**
