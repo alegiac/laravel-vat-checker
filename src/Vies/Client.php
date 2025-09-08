@@ -93,7 +93,12 @@ class Client
                 $cached['errorDescription'] = $soapFault->getMessage();
                 return $cached;
             }
-            throw new ViesException($soapFault->getMessage(), $soapFault->getCode());
+            // No cache fallback: return explicit error payload so callers can surface isError
+            return [
+                'valid' => false,
+                'isError' => true,
+                'errorDescription' => $soapFault->getMessage(),
+            ];
         }
 
         // Should not reach here; added for type completeness

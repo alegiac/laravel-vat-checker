@@ -53,7 +53,10 @@ class LaravelVatChecker
             $response->setErrorDescription($externalData['errorDescription'] ?? null);
             
             if (($externalData['valid'] ?? false) === true) {
-                $response->setDetails($externalData);
+                // remove non-detail keys from details payload
+                $details = $externalData;
+                unset($details['isError'], $details['errorDescription']);
+                $response->setDetails($details);
             }
         } else {
             $response->setIsValid(false);
