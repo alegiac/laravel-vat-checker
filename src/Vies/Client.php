@@ -56,6 +56,9 @@ class Client
             );
 
             $responseArray = (array) $response;
+            // normalize shape with error flags
+            $responseArray['isError'] = false;
+            $responseArray['errorDescription'] = null;
 
             if ($cacheEnabled) {
                 if ($cacheTtl <= 0) {
@@ -85,7 +88,10 @@ class Client
                 }
             }
             if ($cacheEnabled && Cache::has($cacheKey)) {
-                return (array) Cache::get($cacheKey);
+                $cached = (array) Cache::get($cacheKey);
+                $cached['isError'] = true;
+                $cached['errorDescription'] = $soapFault->getMessage();
+                return $cached;
             }
             throw new ViesException($soapFault->getMessage(), $soapFault->getCode());
         }

@@ -35,6 +35,8 @@ class LaravelVatChecker
             // Country not supported
             $response->setIsFormatted(false);
             $response->setIsValid(false);
+            $response->setIsError(true);
+            $response->setErrorDescription('Country not supported');
             $response->setDetails([]);
             return $response->output();
         }
@@ -47,12 +49,16 @@ class LaravelVatChecker
             // Validate against external services
             $externalData = $validator->validateExternal($cleanVatNumber);
             $response->setIsValid($externalData['valid'] ?? false);
+            $response->setIsError($externalData['isError'] ?? false);
+            $response->setErrorDescription($externalData['errorDescription'] ?? null);
             
             if (($externalData['valid'] ?? false) === true) {
                 $response->setDetails($externalData);
             }
         } else {
             $response->setIsValid(false);
+            $response->setIsError(false);
+            $response->setErrorDescription(null);
             $response->setDetails([]);
         }
 

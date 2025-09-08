@@ -9,6 +9,8 @@ class LaravelVatCheckerResponse implements VatResponseInterface
     private bool $isFormatted = false;
     private bool $isVies = false;
     private array $details = [];
+    private bool $isError = false;
+    private ?string $errorDescription = null;
 
     public function __construct(bool $isFormatted = false, bool $isVies = false, array $details = [])
     {
@@ -44,11 +46,25 @@ class LaravelVatCheckerResponse implements VatResponseInterface
         return $this;
     }
 
+    public function setIsError(bool $isError): LaravelVatCheckerResponse
+    {
+        $this->isError = $isError;
+        return $this;
+    }
+
+    public function setErrorDescription(?string $errorDescription): LaravelVatCheckerResponse
+    {
+        $this->errorDescription = $errorDescription;
+        return $this;
+    }
+
     public function output(): array
     {
         return [
             'isFormatted' => $this->isFormatted,
             'isVies' => $this->isVies,
+            'isError' => $this->isError,
+            'errorDescription' => $this->errorDescription,
             'details' => $this->details !== null ? $this->details : [],
         ];
     }
