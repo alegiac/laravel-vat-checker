@@ -2,12 +2,13 @@
 
 namespace Alegiac\LaravelVatChecker;
 
-class LaravelVatCheckerResponse
-{
+use Alegiac\LaravelVatChecker\Contracts\VatResponseInterface;
 
-    private bool $isFormatted;
-    private bool $isVies;
-    private array $details;
+class LaravelVatCheckerResponse implements VatResponseInterface
+{
+    private bool $isFormatted = false;
+    private bool $isVies = false;
+    private array $details = [];
 
     public function __construct(bool $isFormatted = false, bool $isVies = false, array $details = [])
     {
@@ -16,13 +17,21 @@ class LaravelVatCheckerResponse
         $this->details = $details;
     }
 
-
     public function setIsFormatted(bool $isFormatted): LaravelVatCheckerResponse
     {
         $this->isFormatted = $isFormatted;
         return $this;
     }
 
+    public function setIsValid(bool $isValid): LaravelVatCheckerResponse
+    {
+        $this->isVies = $isValid;
+        return $this;
+    }
+
+    /**
+     * @deprecated Use setIsValid() instead for better naming
+     */
     public function setIsVies(bool $isVies): LaravelVatCheckerResponse
     {
         $this->isVies = $isVies;
