@@ -9,31 +9,40 @@ use Illuminate\Support\Facades\Mail;
 use SoapClient;
 use SoapFault;
 
+/**
+ * VIES SOAP client wrapper with cache and notification support.
+ *
+ * Handles remote calls to the EU VIES service, caches successful
+ * responses, falls back to cache on connection errors, and optionally
+ * notifies via email when a connection error occurs.
+ */
 class Client
 {
     /**
-     * @const string
+     * WSDL URL for the official VIES service.
      */
     public const URL = 'https://ec.europa.eu/taxation_customs/vies/checkVatService.wsdl';
 
     private ?\SoapClient $client = null;
 
     /**
-     * Client constructor.
+     * Create a new VIES client instance.
      *
-     * @param int $timeout
+     * @param int $timeout Connection timeout in seconds
      */
     public function __construct(protected int $timeout = 10)
     {
     }
 
     /**
-     * Check via Vies the VAT number
-     * @param string $vatNumber
+     * Validate a VAT number against VIES.
      *
-     * @return bool
+     * On success, optionally caches the response.
+     * On connection error, sends optional notifications, returns cache
+     * if present, otherwise returns an explicit error payload.
      *
-     * @throws ViesException
+     * @param string $vatNumber Full VAT number including country prefix
+     * @return array Standardized payload from VIES (plus error flags)
      */
     public function check(string $vatNumber): array
     {
@@ -107,7 +116,8 @@ class Client
     }
 
     /**
-     * Create SoapClient
+     * Lazily create the underlying SoapClient.
+     *
      * @return SoapClient
      */
     protected function getClient(): SoapClient

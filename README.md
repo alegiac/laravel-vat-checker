@@ -3,15 +3,15 @@
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/alegiac/laravel-vat-checker.svg?style=flat-square)](https://packagist.org/packages/alegiac/laravel-vat-checker)
 [![Total Downloads](https://img.shields.io/packagist/dt/alegiac/laravel-vat-checker.svg?style=flat-square)](https://packagist.org/packages/alegiac/laravel-vat-checker)
 
-Validator per Partite IVA europee con controllo formale e verifica VIES.
+European VAT validator for Laravel with format checks and VIES verification. Includes optional caching and email notifications on connection errors.
 
-## Installazione
+## Installation
 
 ```bash
 composer require alegiac/laravel-vat-checker
 ```
 
-## Utilizzo
+## Usage
 
 ### Facade (Laravel)
 
@@ -22,11 +22,13 @@ $result = LaravelVatChecker::check('IT12345678901');
 // $result = [
 //   'isFormatted' => bool,
 //   'isVies' => bool,
+//   'isError' => bool,
+//   'errorDescription' => string|null,
 //   'details' => array
 // ];
 ```
 
-### Classe
+### Class
 
 ```php
 use Alegiac\LaravelVatChecker\LaravelVatChecker;
@@ -35,16 +37,35 @@ $checker = new LaravelVatChecker();
 $result = $checker->check('DE123456789');
 ```
 
-## Paesi supportati (EU)
+## Configuration (optional)
+
+Publish config and views (for email notifications):
+
+```bash
+php artisan vendor:publish --tag=vat-checker-config
+php artisan vendor:publish --tag=vat-checker-views
+```
+
+Environment variables:
+
+```env
+VAT_CHECKER_CACHE=true
+VAT_CHECKER_CACHE_TTL=86400   # 0 = forever
+VAT_CHECKER_NOTIFICATIONS=true
+VAT_CHECKER_NOTIFICATIONS_MAIL=true
+VAT_CHECKER_NOTIFICATIONS_MAIL_TO=ops@example.com
+```
+
+## Supported EU countries
 AT, BE, BG, CY, CZ, DE, DK, EE, EL, ES, FI, FR, HR, HU, IE, IT, LT, LU, LV, MT, NL, PL, PT, RO, SE, SI, SK
 
-## Test
+## Testing
 
 ```bash
 composer test
 ```
 
-## Licenza
+## License
 MIT
 
 ### Changelog

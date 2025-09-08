@@ -6,6 +6,13 @@ use Alegiac\LaravelVatChecker\Contracts\VatValidatorInterface;
 use Alegiac\LaravelVatChecker\Vies\Client;
 use Alegiac\LaravelVatChecker\Vies\ViesException;
 
+/**
+ * VAT validator implementation for EU countries.
+ *
+ * Performs format validation via regexes and additional Luhn
+ * validation for Italian VAT numbers, and delegates external
+ * validation to the VIES client.
+ */
 class EuVatValidator implements VatValidatorInterface
 {
     /**
@@ -46,16 +53,23 @@ class EuVatValidator implements VatValidatorInterface
 
     private Client $viesClient;
 
+    /**
+     * Inject the VIES client dependency.
+     *
+     * @param Client|null $viesClient
+     */
     public function __construct(?Client $viesClient = null)
     {
         $this->viesClient = $viesClient ?? new Client();
     }
 
+    /** @inheritDoc */
     public function supports(string $countryCode): bool
     {
         return isset(self::$patternExpression[$countryCode]);
     }
 
+    /** @inheritDoc */
     public function validateFormat(string $vatNumber): bool
     {
         $vatNumber = $this->cleanVatNumber($vatNumber);
@@ -76,6 +90,7 @@ class EuVatValidator implements VatValidatorInterface
         return $validateRule;
     }
 
+    /** @inheritDoc */
     public function validateExternal(string $vatNumber): array
     {
         try {
@@ -83,26 +98,32 @@ class EuVatValidator implements VatValidatorInterface
         } catch (ViesException $e) {
             return [
                 'valid' => false,
-                'error' => $e->getMessage(),
+                'isError' => true,
+                'errorDescription' => $e->getMessage(),
                 'countryCode' => $this->extractCountryCode($vatNumber),
                 'vatNumber' => substr($vatNumber, 2),
             ];
         }
     }
 
+    /** @inheritDoc */
     public function extractCountryCode(string $vatNumber): string
     {
         $vatNumber = $this->cleanVatNumber($vatNumber);
         return substr($vatNumber, 0, 2);
     }
 
+    /** @inheritDoc */
     public function cleanVatNumber(string $vatNumber): string
     {
         return strtoupper(trim($vatNumber));
     }
 
     /**
-     * Split VAT number into country code and number
+     * Split VAT number into country code and number.
+     *
+     * @param string $vatNumber
+     * @return array{0:string,1:string}
      */
     private function splitVat(string $vatNumber): array
     {
@@ -113,9 +134,11 @@ class EuVatValidator implements VatValidatorInterface
     }
 
     /**
-     * A php implementation of Luhn Algorithm
+     * Luhn algorithm implementation for checksum validation.
      *
      * @link https://en.wikipedia.org/wiki/Luhn_algorithm
+     * @param string $vat
+     * @return int Sum modulo result
      */
     private function luhnCheck(string $vat): int
     {
@@ -138,7 +161,9 @@ class EuVatValidator implements VatValidatorInterface
     }
 
     /**
-     * Get all supported EU country codes
+     * Get all supported EU country codes.
+     *
+     * @return array
      */
     public static function getSupportedCountries(): array
     {

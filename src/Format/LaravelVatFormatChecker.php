@@ -2,6 +2,11 @@
 
 namespace Alegiac\LaravelVatChecker\Format;
 
+/**
+ * Legacy format validator kept for backward compatibility.
+ *
+ * Use Validators/EuVatValidator for the current implementation.
+ */
 class LaravelVatFormatChecker
 {
     /**
@@ -42,8 +47,9 @@ class LaravelVatFormatChecker
 
 
     /**
-     * Return if a country is supported by this validator
-     * @param string $country
+     * Check if a country is supported by this validator.
+     *
+     * @param string $country Two-letter ISO country code
      * @return bool
      */
     public static function countryIsSupported(string $country): bool
@@ -52,6 +58,8 @@ class LaravelVatFormatChecker
     }
 
     /**
+     * Normalize VAT number by trimming and uppercasing.
+     *
      * @param string $vatNumber
      * @return string
      */
@@ -63,8 +71,10 @@ class LaravelVatFormatChecker
     }
 
     /**
+     * Split VAT number into country prefix and numeric part.
+     *
      * @param string $vatNumber
-     * @return array
+     * @return array{0:string,1:string}
      */
     static public function splitVat(string $vatNumber): array
     {
@@ -76,6 +86,7 @@ class LaravelVatFormatChecker
 
     /**
      * Validate a VAT number format.
+     *
      * @param string $vatNumber
      * @return bool
      */
@@ -100,7 +111,7 @@ class LaravelVatFormatChecker
     }
 
     /**
-     * A php implementation of Luhn Algo
+     * Luhn algorithm helper.
      *
      * @link https://en.wikipedia.org/wiki/Luhn_algorithm
      * @param  string  $vat

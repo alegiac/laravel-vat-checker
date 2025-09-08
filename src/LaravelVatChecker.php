@@ -6,11 +6,24 @@ use Alegiac\LaravelVatChecker\Contracts\VatResponseInterface;
 use Alegiac\LaravelVatChecker\Contracts\VatValidatorFactoryInterface;
 use Alegiac\LaravelVatChecker\Contracts\VatValidatorInterface;
 
+/**
+ * Main entry point for VAT validation.
+ *
+ * Orchestrates format validation and external (VIES or other) validation
+ * through the configured validator factory, and produces a consistent
+ * response payload.
+ */
 class LaravelVatChecker
 {
     private VatValidatorFactoryInterface $validatorFactory;
     private VatResponseInterface $response;
 
+    /**
+     * Create a new VAT checker instance.
+     *
+     * @param VatValidatorFactoryInterface|null $validatorFactory Factory to resolve country validators
+     * @param VatResponseInterface|null $response Response instance prototype
+     */
     public function __construct(
         ?VatValidatorFactoryInterface $validatorFactory = null,
         ?VatResponseInterface $response = null
@@ -20,7 +33,10 @@ class LaravelVatChecker
     }
 
     /**
-     * Check VAT number format and validity
+     * Check VAT number format and validity.
+     *
+     * @param string $vatNumber Full VAT number including country prefix
+     * @return array Standardized response payload
      */
     public function check(string $vatNumber): array
     {
@@ -69,7 +85,9 @@ class LaravelVatChecker
     }
 
     /**
-     * Get all supported countries
+     * Get all supported countries.
+     *
+     * @return array List of supported ISO country codes
      */
     public function getSupportedCountries(): array
     {
@@ -77,7 +95,10 @@ class LaravelVatChecker
     }
 
     /**
-     * Check if a country is supported
+     * Check if a country is supported.
+     *
+     * @param string $countryCode ISO country code
+     * @return bool True when supported
      */
     public function isCountrySupported(string $countryCode): bool
     {
@@ -85,7 +106,10 @@ class LaravelVatChecker
     }
 
     /**
-     * Register a custom validator
+     * Register a custom validator.
+     *
+     * @param VatValidatorInterface $validator Custom validator instance
+     * @return void
      */
     public function registerValidator(VatValidatorInterface $validator): void
     {
@@ -93,7 +117,10 @@ class LaravelVatChecker
     }
 
     /**
-     * Clean and normalize VAT number
+     * Clean and normalize VAT number.
+     *
+     * @param string $vatNumber
+     * @return string Upper-cased and trimmed VAT number
      */
     private function cleanVatNumber(string $vatNumber): string
     {
@@ -101,7 +128,10 @@ class LaravelVatChecker
     }
 
     /**
-     * Extract country code from VAT number
+     * Extract country code from VAT number.
+     *
+     * @param string $vatNumber
+     * @return string Two-letter ISO country code
      */
     private function extractCountryCode(string $vatNumber): string
     {

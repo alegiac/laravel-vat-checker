@@ -7,10 +7,15 @@ use Alegiac\LaravelVatChecker\Contracts\VatValidatorFactoryInterface;
 use Alegiac\LaravelVatChecker\Factories\VatValidatorFactory;
 use Illuminate\Support\ServiceProvider;
 
+/**
+ * Service provider for the Laravel VAT Checker package.
+ */
 class LaravelVatCheckerServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap the application services.
+     *
+     * @return void
      */
     public function boot()
     {
@@ -29,6 +34,8 @@ class LaravelVatCheckerServiceProvider extends ServiceProvider
 
     /**
      * Register the application services.
+     *
+     * @return void
      */
     public function register()
     {

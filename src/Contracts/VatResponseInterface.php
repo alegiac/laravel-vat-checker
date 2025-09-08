@@ -2,25 +2,28 @@
 
 namespace Alegiac\LaravelVatChecker\Contracts;
 
+/**
+ * Contract for building VAT checker responses.
+ */
 interface VatResponseInterface
 {
     /**
-     * Set the format validation result
+     * Set the format validation result.
      */
     public function setIsFormatted(bool $isFormatted): self;
 
     /**
-     * Set the external validation result
+     * Set the external validation result.
      */
     public function setIsValid(bool $isValid): self;
 
     /**
-     * Set the validation details
+     * Set the validation details.
      */
     public function setDetails(array $details): self;
 
     /**
-     * Get the response as array (maintains backward compatibility)
+     * Get the response as array (maintains backward compatibility).
      */
     public function output(): array;
 }

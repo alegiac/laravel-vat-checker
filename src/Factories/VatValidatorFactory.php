@@ -6,23 +6,35 @@ use Alegiac\LaravelVatChecker\Contracts\VatValidatorFactoryInterface;
 use Alegiac\LaravelVatChecker\Contracts\VatValidatorInterface;
 use Alegiac\LaravelVatChecker\Validators\EuVatValidator;
 
+/**
+ * Default factory for VAT validators.
+ */
 class VatValidatorFactory implements VatValidatorFactoryInterface
 {
     private array $validators = [];
 
+    /**
+     * Register default validators on construction.
+     */
     public function __construct()
     {
         $this->registerDefaultValidators();
     }
 
     /**
-     * Register a validator for specific country codes
+     * Register a validator for specific country codes.
+     *
+     * @param VatValidatorInterface $validator
+     * @return void
      */
     public function registerValidator(VatValidatorInterface $validator): void
     {
         $this->validators[] = $validator;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function createValidator(string $countryCode): ?VatValidatorInterface
     {
         foreach ($this->validators as $validator) {
@@ -34,6 +46,9 @@ class VatValidatorFactory implements VatValidatorFactoryInterface
         return null;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getSupportedCountries(): array
     {
         $countries = [];
@@ -45,13 +60,18 @@ class VatValidatorFactory implements VatValidatorFactoryInterface
         return array_unique($countries);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function isCountrySupported(string $countryCode): bool
     {
         return $this->createValidator($countryCode) !== null;
     }
 
     /**
-     * Register default validators
+     * Register default validators.
+     *
+     * @return void
      */
     private function registerDefaultValidators(): void
     {
