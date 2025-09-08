@@ -3,7 +3,9 @@
 namespace Alegiac\LaravelVatChecker\Vies;
 
 use Alegiac\LaravelVatChecker\Format\LaravelVatFormatChecker;
+use Alegiac\LaravelVatChecker\Mail\ViesConnectionError;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Mail;
 use SoapClient;
 use SoapFault;
 
@@ -66,6 +68,22 @@ class Client
             return $responseArray;
 
         } catch (SoapFault $soapFault) {
+            // Notifications on connection error
+            if ((bool) config('vat-checker.notifications.enabled', false)
+                && (bool) config('vat-checker.notifications.mail.enabled', false)
+            ) {
+                $to = (string) config('vat-checker.notifications.mail.to', '');
+                if (!empty($to)) {
+                    try {
+                        Mail::to(explode(',', $to))->send(new ViesConnectionError(
+                            strtoupper(trim($vatNumber)),
+                            $soapFault->getMessage()
+                        ));
+                    } catch (\Throwable $e) {
+                        // Silently ignore mail errors to not break flow
+                    }
+                }
+            }
             if ($cacheEnabled && Cache::has($cacheKey)) {
                 return (array) Cache::get($cacheKey);
             }
