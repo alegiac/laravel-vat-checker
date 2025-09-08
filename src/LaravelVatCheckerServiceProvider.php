@@ -17,7 +17,7 @@ class LaravelVatCheckerServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->publishes([
                 __DIR__.'/../config/config.php' => config_path('laravel-vat-checker.php'),
-            ], 'config');
+            ], 'vat-checker-config');
         }
     }
 
