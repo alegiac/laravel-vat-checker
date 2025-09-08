@@ -5,7 +5,7 @@
         "alegiac",
         "laravel-vat-checker"
     ],
-    "version": "1.0.3",
+    
     "homepage": "https://github.com/alegiac/laravel-vat-checker",
     "license": "MIT",
     "type": "library",

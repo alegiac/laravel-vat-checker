@@ -3,6 +3,7 @@
 namespace Alegiac\LaravelVatChecker\Vies;
 
 use Alegiac\LaravelVatChecker\Format\LaravelVatFormatChecker;
+use Illuminate\Support\Facades\Cache;
 use SoapClient;
 use SoapFault;
 
@@ -34,6 +35,10 @@ class Client
      */
     public function check(string $vatNumber): array
     {
+        $cacheEnabled = (bool) (config('vat-checker.cache.enabled', true));
+        $cacheTtl = (int) (config('vat-checker.cache.ttl', 86400));
+        $cacheKey = 'vat-checker:' . strtoupper(trim($vatNumber));
+
         try {
             $vat = LaravelVatFormatChecker::splitVat($vatNumber);
 
@@ -48,11 +53,28 @@ class Client
                 ]
             );
 
+            $responseArray = (array) $response;
+
+            if ($cacheEnabled) {
+                if ($cacheTtl <= 0) {
+                    Cache::forever($cacheKey, $responseArray);
+                } else {
+                    Cache::put($cacheKey, $responseArray, $cacheTtl);
+                }
+            }
+
+            return $responseArray;
+
         } catch (SoapFault $soapFault) {
+            if ($cacheEnabled && Cache::has($cacheKey)) {
+                return (array) Cache::get($cacheKey);
+            }
             throw new ViesException($soapFault->getMessage(), $soapFault->getCode());
         }
 
-        return (array)$response;
+        // Should not reach here; added for type completeness
+        // Return empty array if something unexpected happens
+        return [];
     }
 
     /**
