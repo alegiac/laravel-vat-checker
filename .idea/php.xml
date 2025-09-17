@@ -245,6 +245,7 @@
       <path value="$PROJECT_DIR$/../testers/vat-checker-tester/vendor/phpunit/phpunit" />
       <path value="$PROJECT_DIR$/../testers/vat-checker-tester/vendor/phpunit/php-timer" />
       <path value="$PROJECT_DIR$/../testers/vat-checker-tester/vendor/psy/psysh" />
+      <path value="$PROJECT_DIR$/../testers/vat-checker-tester/vendor/phiki/phiki" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.0" />
@@ -253,6 +254,7 @@
   </component>
   <component name="PhpUnit">
     <phpunit_settings>
+      <PhpUnitSettings configuration_file_path="$PROJECT_DIR$/../testers/vat-checker-tester/phpunit.xml" custom_loader_path="$PROJECT_DIR$/../testers/vat-checker-tester/vendor/autoload.php" paratest_path="$PROJECT_DIR$/../testers/vat-checker-tester/vendor/bin/paratest_for_phpstorm" use_configuration_file="true" />
       <PhpUnitSettings custom_loader_path="$PROJECT_DIR$/vendor/autoload.php" />
     </phpunit_settings>
   </component>

@@ -4,6 +4,7 @@
     <option name="directories">
       <list>
         <option value="$PROJECT_DIR$/../references/laravel-vat-eu-validator/tests" />
+        <option value="$PROJECT_DIR$/../testers/vat-checker-tester/tests" />
       </list>
     </option>
   </component>

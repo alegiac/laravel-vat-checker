@@ -6,6 +6,7 @@ use Alegiac\LaravelVatChecker\Contracts\VatValidatorFactoryInterface;
 use Alegiac\LaravelVatChecker\Contracts\VatValidatorInterface;
 use Alegiac\LaravelVatChecker\Validators\EuVatValidator;
 use Alegiac\LaravelVatChecker\Validators\ChVatValidator;
+use Alegiac\LaravelVatChecker\Validators\UkVatValidator;
 
 /**
  * Default factory for VAT validators.
@@ -78,5 +79,6 @@ class VatValidatorFactory implements VatValidatorFactoryInterface
     {
         $this->registerValidator(new EuVatValidator());
         $this->registerValidator(new ChVatValidator());
+        $this->registerValidator(new UkVatValidator());
     }
 }

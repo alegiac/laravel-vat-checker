@@ -37,6 +37,22 @@ $checker = new LaravelVatChecker();
 $result = $checker->check('DE123456789');
 ```
 
+### Examples
+
+UK (format validation only):
+
+```php
+$result = LaravelVatChecker::check('GB123456789');
+// $result['isFormatted'] === true/false
+```
+
+Switzerland (format validation only, accepts separators and suffixes):
+
+```php
+$result = LaravelVatChecker::check('CHE-421.098.863 MWST');
+// $result['isFormatted'] === true/false
+```
+
 ## Configuration (optional)
 
 Publish config and views (for email notifications):
@@ -59,6 +75,7 @@ VAT_CHECKER_NOTIFICATIONS_MAIL_TO=ops@example.com
 ## Supported countries
 - EU: AT, BE, BG, CY, CZ, DE, DK, EE, EL, ES, FI, FR, HR, HU, IE, IT, LT, LU, LV, MT, NL, PL, PT, RO, SE, SI, SK
 - CH: Switzerland (format validation only)
+- GB: United Kingdom (format validation only)
 
 ## Testing
 
