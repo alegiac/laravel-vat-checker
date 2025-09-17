@@ -5,6 +5,7 @@ namespace Alegiac\LaravelVatChecker\Factories;
 use Alegiac\LaravelVatChecker\Contracts\VatValidatorFactoryInterface;
 use Alegiac\LaravelVatChecker\Contracts\VatValidatorInterface;
 use Alegiac\LaravelVatChecker\Validators\EuVatValidator;
+use Alegiac\LaravelVatChecker\Validators\ChVatValidator;
 
 /**
  * Default factory for VAT validators.
@@ -76,5 +77,6 @@ class VatValidatorFactory implements VatValidatorFactoryInterface
     private function registerDefaultValidators(): void
     {
         $this->registerValidator(new EuVatValidator());
+        $this->registerValidator(new ChVatValidator());
     }
 }

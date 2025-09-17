@@ -32,4 +32,18 @@ return [
             'subject' => env('VAT_CHECKER_NOTIFICATIONS_MAIL_SUBJECT', 'VAT Checker: VIES connection error'),
         ],
     ],
+
+    'ch' => [
+        // Enable external validation for Switzerland (CH) via HTTP API
+        'external' => [
+            'enabled' => env('VAT_CHECKER_CH_EXTERNAL', false),
+            // Base URL of the external service (must return JSON)
+            'url' => env('VAT_CHECKER_CH_EXTERNAL_URL', ''),
+            // Optional API key/header name
+            'api_key' => env('VAT_CHECKER_CH_EXTERNAL_API_KEY', ''),
+            'api_key_header' => env('VAT_CHECKER_CH_EXTERNAL_API_KEY_HEADER', 'Authorization'),
+            // Timeout seconds
+            'timeout' => env('VAT_CHECKER_CH_EXTERNAL_TIMEOUT', 10),
+        ],
+    ],
 ];

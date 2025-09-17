@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'alegiac/laravel-vat-checker',
-        'pretty_version' => '1.0.2',
-        'version' => '1.0.2.0',
-        'reference' => null,
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
+        'reference' => '252a67261cce862450a2aaf2d8d8f436b21cea91',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -11,9 +11,9 @@
     ),
     'versions' => array(
         'alegiac/laravel-vat-checker' => array(
-            'pretty_version' => '1.0.2',
-            'version' => '1.0.2.0',
-            'reference' => null,
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
+            'reference' => '252a67261cce862450a2aaf2d8d8f436b21cea91',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

@@ -56,8 +56,9 @@ VAT_CHECKER_NOTIFICATIONS_MAIL=true
 VAT_CHECKER_NOTIFICATIONS_MAIL_TO=ops@example.com
 ```
 
-## Supported EU countries
-AT, BE, BG, CY, CZ, DE, DK, EE, EL, ES, FI, FR, HR, HU, IE, IT, LT, LU, LV, MT, NL, PL, PT, RO, SE, SI, SK
+## Supported countries
+- EU: AT, BE, BG, CY, CZ, DE, DK, EE, EL, ES, FI, FR, HR, HU, IE, IT, LT, LU, LV, MT, NL, PL, PT, RO, SE, SI, SK
+- CH: Switzerland (format validation only)
 
 ## Testing
 
