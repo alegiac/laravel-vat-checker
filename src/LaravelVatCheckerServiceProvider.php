@@ -30,6 +30,8 @@ class LaravelVatCheckerServiceProvider extends ServiceProvider
         }
 
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'laravel-vat-checker');
+
+        // No HTTP routes exposed; this is a library package.
     }
 
     /**
@@ -58,6 +60,11 @@ class LaravelVatCheckerServiceProvider extends ServiceProvider
                 $app->make(VatValidatorFactoryInterface::class),
                 $app->make(VatResponseInterface::class)
             );
+        });
+
+        // Register VAT rates service
+        $this->app->singleton(\Alegiac\LaravelVatChecker\Services\VatRatesService::class, function () {
+            return new \Alegiac\LaravelVatChecker\Services\VatRatesService();
         });
     }
 }

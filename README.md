@@ -53,6 +53,34 @@ $result = LaravelVatChecker::check('CHE-421.098.863 MWST');
 // $result['isFormatted'] === true/false
 ```
 
+Norway (format validation only, MOD11 check, optional MVA suffix):
+
+```php
+$result = LaravelVatChecker::check('NO999888777MVA');
+// $result['isFormatted'] === true/false
+```
+
+Australia (format validation only, ABN 11 digits with checksum):
+
+```php
+$result = LaravelVatChecker::check('AU51824753556');
+// $result['isFormatted'] === true/false
+```
+
+Canada (format validation only, BN 9 digits with optional RT0001):
+
+```php
+$result = LaravelVatChecker::check('CA123456789RT0001');
+// $result['isFormatted'] === true/false
+```
+
+New Zealand (format validation only, GST 8–9 digits):
+
+```php
+$result = LaravelVatChecker::check('NZ123456789');
+// $result['isFormatted'] === true/false
+```
+
 ## Configuration (optional)
 
 Publish config and views (for email notifications):
@@ -76,6 +104,10 @@ VAT_CHECKER_NOTIFICATIONS_MAIL_TO=ops@example.com
 - EU: AT, BE, BG, CY, CZ, DE, DK, EE, EL, ES, FI, FR, HR, HU, IE, IT, LT, LU, LV, MT, NL, PL, PT, RO, SE, SI, SK
 - CH: Switzerland (format validation only)
 - GB: United Kingdom (format validation only)
+- NO: Norway (format validation only)
+ - AU: Australia (format validation only)
+ - CA: Canada (format validation only)
+ - NZ: New Zealand (format validation only)
 
 ## Testing
 
